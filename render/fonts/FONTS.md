@@ -1,5 +1,7 @@
 # Fonts
 
+This Cyrillic extension adds 33 Russian capitals to nine existing faces and nineteen additional faces, including seven Spectral weights. See [../../CYRILLIC.md](../../CYRILLIC.md) for the full inventory and [licenses/FREE-FONTS.md](licenses/FREE-FONTS.md) for the separate terms of Lighthaus and Saint. The original inventory below is retained as upstream documentation.
+
 Only the capitals are here: each face as the outlines of its A to Z, taken unchanged from the
 original font file and kept as SVG path data in caps/<face>.json (made by tools/caps.cjs in the
 source). The base faces are from Google Fonts, under the SIL Open Font License 1.1 (OFL.txt).
@@ -57,3 +59,7 @@ is by Dmitry Krasny, Bonnie Scranton and Edward Tufte, MIT.
 | Victorian Initials One (Dieter Steffmann (Typographer Mediengestaltung)) | initials | 100% Free (dafont); https://www.dafont.com/victorian-initials-.font |
 | Elzevier Caps (Dieter Steffmann (Typographer Mediengestaltung), from David Rakowski's EPS art) | initials | 1001Fonts Free For Commercial Use License (FFC); https://www.1001fonts.com/elzevier-caps-font.html |
 | Starburst (David Rakowski; German characters added by Dieter Steffmann) | initials | 1001Fonts Free For Commercial Use License (FFC); https://www.1001fonts.com/starburst-font.html |
+
+## Spectral addition
+
+Spectral by Production Type, from Google Fonts: ExtraLight 200, Light 300, Regular 400, Medium 500, Semibold 600, Bold 700 and ExtraBold 800. Each face includes A–Z and all 33 Russian capitals. SIL Open Font License 1.1; see `licenses/spectral-OFL.txt`. Source: https://github.com/google/fonts/tree/main/ofl/spectral .

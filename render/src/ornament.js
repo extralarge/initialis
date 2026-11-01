@@ -3,9 +3,9 @@
 // remaining gaps are filled one at a time (new stems sprouting off whatever is nearest, flowers,
 // leaves, berries) until nothing is left above the density threshold.
 
-import { leaf, flower, circlePoly } from './shapes.js?v=a8136959';
-import { HEADS } from './kinds.js?v=a8136959';
-import { TAU, clamp, lerp } from './util.js?v=a8136959';
+import { leaf, flower, circlePoly } from './shapes.js?v=islands-1';
+import { HEADS } from './kinds.js?v=islands-1';
+import { TAU, clamp, lerp } from './util.js?v=islands-1';
 
 // flowers on the end of a stem (head: true in their modules)
 const HEAD = HEADS;

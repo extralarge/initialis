@@ -1,10 +1,10 @@
 // Turns params into pixels: scene cache (geometry), painters per size, the shared ink pass.
 // Runs inside the render workers (worker.js); the page only shows the bitmaps they send back.
 
-import { buildScene, paintScene, Painter } from './compose.js?v=a8136959';
-import { Ink } from './ink.js?v=a8136959';
-import { PARAMS } from './params.js?v=a8136959';
-import { getFont, fontInfo } from './fonts.js?v=a8136959';
+import { buildScene, paintScene, Painter } from './compose.js?v=islands-1';
+import { Ink } from './ink.js?v=islands-1';
+import { PARAMS } from './params.js?v=islands-1';
+import { getFont, fontInfo } from './fonts.js?v=islands-1';
 
 const PAINT_SIZES = [192, 272, 384, 544, 768, 1088];
 const CHANNEL = { A: '#ff0000', B: '#00ff00', C: '#0000ff' };

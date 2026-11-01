@@ -1,28 +1,27 @@
 // A render worker: params in, ImageBitmap out. Growing, painting and the WebGL print pass all
 // happen here, so the page stays responsive however heavy an initial is.
 
-import { fontList, loadFont } from './fonts.js?v=a8136959';
-import { Renderer, sceneStats } from './render.js?v=a8136959';
-import { loadBlob } from './compose.js?v=a8136959';
-import { need, use } from './kinds.js?v=a8136959';
+import { fontList, loadFont } from './fonts.js?v=islands-1';
+import { Renderer, sceneStats } from './render.js?v=islands-1';
+import { loadBlob } from './compose.js?v=islands-1';
+import { need, use } from './kinds.js?v=islands-1';
+import { passageFor } from './passages.js?v=islands-1';
 
 // blown-up letters' strokes, traced once for every worker (blob/store.js)
 const blown = Ps => Ps.filter(P => P.lBlob > 0).map(P => P.font + ':' + P.text);
 
 // the page of text (In context, the montage) and blown-up letters: fetched the first time they're wanted
-const pageKit = () => import('./page.js?v=a8136959');
-const blobKit = () => import('./blob/store.js?v=a8136959');
+const pageKit = () => import('./page.js?v=islands-1');
+const blobKit = () => import('./blob/store.js?v=islands-1');
 
 // pages of text for the montage, laid out once per letter
-let paras = null;
 const pages = new Map();
 async function page(letter, measure) {
 	const key = letter + ':' + (measure || '');
 	if (pages.has(key)) return pages.get(key);
 	const { textFont, layoutPage, pagePath, hyphenator } = await pageKit();
-	paras = paras || await fetch(new URL('../data/paragraphs.json', import.meta.url)).then(r => r.json());
-	const font = await textFont();
-	const L = layoutPage(font, paras[letter], await hyphenator(), measure);
+	const [font, par, hyph] = await Promise.all([textFont(letter), passageFor(letter), hyphenator(letter)]);
+	const L = layoutPage(font, par, hyph, measure, { maxLines: 300 });
 	const pg = { L, path: pagePath(font, L), paths: new Map() };
 	pages.set(key, pg);
 	return pg;
@@ -30,7 +29,7 @@ async function page(letter, measure) {
 async function pageLines(letter, n, measure) {
 	const pg = await page(letter, measure);
 	if (n === 0) return { L: pg.L, path: new Path2D() }; // the drop cap alone
-	if (!pg.paths.has(n)) { const { textFont, pagePath } = await pageKit(); pg.paths.set(n, { L: pg.L, path: pagePath(await textFont(), pg.L, n) }); }
+	if (!pg.paths.has(n)) { const { textFont, pagePath } = await pageKit(); pg.paths.set(n, { L: pg.L, path: pagePath(await textFont(letter), pg.L, n) }); }
 	return pg.paths.get(n);
 }
 

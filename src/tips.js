@@ -3,7 +3,7 @@
 // the next one shows its words at once; pressing anything, scrolling or dragging puts it away.
 // Mouse only: on touch there is nothing to rest on.
 
-import { paperize } from './torn.js?v=a8136959';
+import { paperize } from './torn.js?v=islands-1';
 
 const DELAY = 350, WARM = 400;
 const tip = document.createElement('div');

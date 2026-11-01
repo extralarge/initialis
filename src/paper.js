@@ -1,7 +1,7 @@
 // A sheet of paper that tiles: soft cloudy formation, fine grain and a scatter of fibres.
 // Drawn once into a canvas; the field repeats it under the initials and pans it with them.
 
-import { rng } from '../render/src/util.js?v=a8136959';
+import { rng } from '../render/src/util.js?v=islands-1';
 
 // value noise on a lattice of p × p cells across the tile, wrapping at its edges
 function layer(r, p) {

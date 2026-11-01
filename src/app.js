@@ -3,20 +3,22 @@
 // children, and the further out they sit the further they stray, until the edges are wild again.
 // The initials are drawn by the renderer (render/), in its own workers.
 
-import { DEFAULTS } from '../render/src/params.js?v=a8136959';
-import { fontList } from '../render/src/fonts.js?v=a8136959';
-import { hash } from '../render/src/util.js?v=a8136959';
-import { SHAPE_FILLS } from '../render/src/patterns.js?v=a8136959';
-import { GIFEncoder, quantize, applyPalette } from '../render/vendor/gifenc.esm.js?v=a8136959';
-import { Muxer, ArrayBufferTarget } from '../render/vendor/mp4-muxer.mjs?v=a8136959';
-import { Field, hexDist, encodeGen, decodeGen, keyHash, shareCode, decodeInitial, collectionCode, decodeCollection, shareBody, shareId, isShareId, fetchShared, fieldFonts, setKept, diff, BLOW_UP } from './breed.js?v=a8136959';
-import { paperize } from './torn.js?v=a8136959';
-import { drawIcon, drawShare } from './icons.js?v=a8136959';
-import { Inking, arrival, PACE } from './inking.js?v=a8136959';
-import { zip } from './zip.js?v=a8136959';
-import { lesson } from './lesson.js?v=a8136959';
-import { count } from './count.js?v=a8136959';
-import { retip } from './tips.js?v=a8136959';
+import { DEFAULTS } from '../render/src/params.js?v=islands-1';
+import { fontList } from '../render/src/fonts.js?v=islands-1';
+import { hash } from '../render/src/util.js?v=islands-1';
+import { SHAPE_FILLS } from '../render/src/patterns.js?v=islands-1';
+import { GIFEncoder, quantize, applyPalette } from '../render/vendor/gifenc.esm.js?v=islands-1';
+import { Muxer, ArrayBufferTarget } from '../render/vendor/mp4-muxer.mjs?v=islands-1';
+import { Field, hexDist, encodeGen, decodeGen, keyHash, shareCode, decodeInitial, collectionCode, decodeCollection, shareBody, shareId, isShareId, fetchShared, fieldFonts, setKept, diff, BLOW_UP } from './breed.js?v=islands-1';
+import { paperize } from './torn.js?v=islands-1';
+import { drawIcon, drawShare } from './icons.js?v=islands-1';
+import { Inking, arrival, PACE } from './inking.js?v=islands-1';
+import { zip } from './zip.js?v=islands-1';
+import { lesson } from './lesson.js?v=islands-1';
+import { count } from './count.js?v=islands-1';
+import { retip } from './tips.js?v=islands-1';
+import { isInitial, fontForText } from './alphabets.js?v=islands-1';
+import { passageFor, loadPassages, hasPassage } from '../render/src/passages.js?v=islands-1';
 
 const Q = new URLSearchParams(location.search);
 const TEST = Q.has('test');
@@ -93,7 +95,7 @@ const STOWED = 600;   // ... and how many of those are kept as small pictures fo
 const TILE = 512;  // paper tile, css px
 
 let S = solo ? soloSize() : cellSize();
-let fonts, field, gen, painters;
+let fonts, allFonts, field, gen, painters;
 let cells = new Map();     // 'q,r' -> { q, r, key, x, y, el, P, state: pending | inflight | shown | stale | failed }
 const leaving = new Map(); // 'q,r' -> when the last generation's initial there has faded
 const cam = { x: 0, y: 0 }; // the world point at the screen centre, in cell units
@@ -104,7 +106,51 @@ const newSeed = () => (Math.random() * 1e9) | 0;
 
 // a letter typed in sets every initial in the field to it; their styles stay as they are
 let letter = null;
-const shown = P => letter ? { ...P, text: letter } : P;
+const shown = P => letter ? { ...P, text: letter, font: fontForText(P.font, letter, allFonts) } : P;
+
+// Alphabet and Letter describe the same script; catalogue changes keep a compatible fixed letter.
+function catalogueControls(list, sample = '') {
+ const script = value => /^[A-Z]$/.test(value || '') ? 'latin' : /^[А-ЩЭЮЯЁ]$/u.test(value || '') ? 'cyrillic' : null;
+ const fixed = readHash().l || (sample.length === 1 ? sample : null);
+ const alphabet = script(fixed) || (Q.get('alphabet') === 'latin' ? 'latin' : 'cyrillic');
+ const available = fieldFonts(list, alphabet);
+ $('#alphabet').value = alphabet;
+ $('#letter-choice').placeholder = alphabet === 'latin' ? 'A' : 'Ж';
+ for (const f of [...available].sort((a, b) => a.name.localeCompare(b.name))) {
+  const option = document.createElement('option'); option.value = f.id; option.textContent = f.name;
+  $('#font-choice').append(option);
+ }
+ const selected = available.find(f => f.id === Q.get('font'));
+ $('#font-choice').value = selected?.id || '';
+ $('#font-count').textContent = `${available.length} faces · type a letter`;
+ const change = e => {
+  const target = $('#alphabet').value;
+  const value = letter && script(letter) !== target ? (target === 'latin' ? 'A' : 'А') : letter;
+  const url = new URL(location.href); url.searchParams.set('alphabet', target);
+  const face = $('#font-choice').value;
+  if (face && fieldFonts(list, target).some(f => f.id === face)) url.searchParams.set('font', face); else url.searchParams.delete('font');
+  for (const key of ['i', 'c', 'look']) url.searchParams.delete(key);
+  url.hash = String(gen.seed) + (value ? '~' + value : ''); location.assign(url);
+ };
+ $('#alphabet').onchange = change; $('#font-choice').onchange = change;
+ $('#letter-choice').addEventListener('input', e => {
+  const value = e.target.value.toUpperCase();
+  if (!value || isInitial(value)) { e.target.value = value; setLetter(value || null); }
+  else e.target.value = letter || '';
+ });
+ return selected ? available.filter(f => f.id === selected.id) : available;
+}
+function followLetterAlphabet(value) {
+ if (!value) return false;
+ const target = /^[A-Z]$/.test(value) ? 'latin' : 'cyrillic';
+ if ($('#alphabet').value === target) return false;
+ const url = new URL(location.href); url.searchParams.set('alphabet', target);
+ const selected = $('#font-choice').value;
+ if (selected && !fieldFonts(allFonts, target).some(f => f.id === selected)) url.searchParams.delete('font');
+ for (const key of ['i', 'c', 'look']) url.searchParams.delete(key);
+ url.hash = encodeGen(gen) + '~' + value;
+ location.assign(url); return true;
+}
 
 // --- rendering --------------------------------------------------------------
 
@@ -123,7 +169,7 @@ class Painters {
 		this.killed = 0;
 	}
 	spawn() {
-		const s = { w: new Worker(new URL('../render/src/worker.js?v=a8136959', import.meta.url), { type: 'module' }), job: null, timer: 0 };
+		const s = { w: new Worker(new URL('../render/src/worker.js?v=islands-1', import.meta.url), { type: 'module' }), job: null, timer: 0 };
 		s.w.onmessage = (e) => {
 			clearTimeout(s.timer);
 			const j = s.job;
@@ -281,6 +327,8 @@ function arriveNow(c, res, size) {
 		return;
 	}
 	times.push(res.stats.total);
+	const visible = shown(c.P);
+	c.el.setAttribute('aria-label', `${visible.text} · ${allFonts.find(f => f.id === visible.font)?.name || visible.font}`);
 	if (TEST) c.stats = res.stats;
 	// what it showed till now, to spread the new one over (at the new size, if it was drawn at another)
 	let old = null;
@@ -564,7 +612,9 @@ function readHash() {
 	const [g, l, p] = location.hash.slice(1).split('~');
 	const dg = decodeGen(g || '');
 	if (dg) dg.pins = (p || '').split('.').filter(Boolean);
-	return { g: dg, l: /^[A-Z]$/.test(l || '') ? l : null };
+	let decoded = l || '';
+	try { decoded = decodeURIComponent(decoded); } catch { }
+	return { g: dg, l: isInitial(decoded) ? decoded : null };
 }
 
 const sameP = (a, b) => Object.keys(DEFAULTS).every(k => a[k] === b[k]);
@@ -598,6 +648,7 @@ function wildField() {
 }
 // the name, top left: a fresh field, as on arriving (nothing open, no letter typed)
 function freshField() {
+	$('#letter-choice').value = '';
 	if (!$('#context').hidden) closeContext();
 	letter = null;
 	wildField();
@@ -655,8 +706,11 @@ function restale() {
 	stopPlays();
 }
 function setLetter(L) {
+	if (L && !isInitial(L)) return;
+	if (followLetterAlphabet(L)) return;
 	if (L === letter) return;
 	letter = L;
+	$('#letter-choice').value = L || '';
 	if (L && teach) teach.did('letter');
 	if (L) count('letter', L);
 	const c = pickedCell() || rootCell();
@@ -845,12 +899,12 @@ fieldEl.addEventListener('wheel', (e) => {
 
 addEventListener('keydown', (e) => {
 	const cmd = e.metaKey || e.ctrlKey, k = e.key;
-	if (e.target.closest && e.target.closest('input, textarea')) return;
+	if (e.target.closest && e.target.closest('input, textarea, select')) return;
 	if ((cmd && k.toLowerCase() === 'z' && !e.shiftKey) || k === 'Backspace') { e.preventDefault(); if (depth() > 0) history.back(); }
 	else if (cmd && k.toLowerCase() === 'z' && e.shiftKey) { e.preventDefault(); if (depth() < reach) history.forward(); }
 	else if (albumOf) { if (k === 'Escape' || k === 'Backspace') { e.preventDefault(); fromAlbum(); } }
 	else if (k === 'Escape') { if (!$('#context').hidden) closeContext(); else if (leafEl) closeLeaf(); else if (picked) pick(null); else setLetter(null); }
-	else if (!cmd && !e.altKey && /^[a-z]$/i.test(k)) setLetter(k.toUpperCase());
+	else if (!cmd && !e.altKey && isInitial(k.toUpperCase())) setLetter(k.toUpperCase());
 	else if (!cmd && k === ' ') { e.preventDefault(); wildField(); }
 });
 
@@ -1269,6 +1323,8 @@ function ui() {
 	$('#hint').textContent = NO_GL ? 'this browser can’t draw them: they need WebGL2 off-screen (current Chrome, Firefox or Safari 17+)' : '';
 	for (const [b, off] of [[$('#back'), depth() === 0 && !(solo && cameFrom)], [$('#fwd'), depth() >= reach]]) { b.classList.toggle('off', off); b.disabled = off; }
 	if (P) {
+		$('#incontext').disabled = !hasPassage(P.text);
+		$('#incontext').classList.toggle('off', !hasPassage(P.text));
 		const on = isSaved(P);
 		if ($('#save').classList.contains('on') !== on) { $('#save').classList.toggle('on', on); icon($('#save'), on ? 'saved' : 'save', INK); }
 		retip($('#save'), on ? 'bookmarked' : 'bookmark');
@@ -1577,14 +1633,19 @@ $('#download').onclick = () => pickedCell() && busy($('#download'), async say =>
 
 // in context, flat: the opening page (render/data/paragraphs.json in ET Book) in a box, for
 // browsers without WebGPU
+let contextTicket = 0;
 async function showContext(P) {
 	const box = $('#context');
+	const ticket = ++contextTicket;
 	box.hidden = false;
 	box.innerHTML = '<p>setting the page…</p>';
 	const h = Math.round(Math.min(innerHeight - 32, 1100)), w = Math.round(Math.min(innerWidth - 32, h * 0.72));
-	const ch = /^[A-Z]/.test(P.text) ? P.text[0] : 'A';
-	const r = await painters.run({ P, size: Math.round(h * DPR), w: Math.round(w * DPR), page: ch, k: 1, measure: 420, quality: QUALITY, budget: 8000, once: true }, 'context');
-	if (box.hidden) { if (r) r.bitmap.close(); return; }
+	const ch = P.text[0];
+	let r, par;
+	try {
+		[par, r] = await Promise.all([passageFor(ch), painters.run({ P, size: Math.round(h * DPR), w: Math.round(w * DPR), page: ch, k: 1, measure: 420, quality: QUALITY, budget: 8000, once: true }, 'context')]);
+	} catch (e) { if (!box.hidden && ticket === contextTicket) box.innerHTML = '<p>that page failed to set</p>'; return; }
+	if (box.hidden || ticket !== contextTicket) { if (r) r.bitmap.close(); return; }
 	if (!r) { box.innerHTML = '<p>that page failed to set</p>'; return; }
 	const cv = document.createElement('canvas');
 	cv.width = r.bitmap.width; cv.height = r.bitmap.height;
@@ -1592,7 +1653,7 @@ async function showContext(P) {
 	cv.getContext('bitmaprenderer').transferFromImageBitmap(r.bitmap);
 	box.replaceChildren(cv);
 }
-function closeContext() { $('#context').hidden = true; $('#context').replaceChildren(); painters.cancel('context'); }
+function closeContext() { contextTicket++; $('#context').hidden = true; $('#context').replaceChildren(); painters.cancel('context'); }
 $('#context').onclick = closeContext;
 
 // in context: an aged sheet across the whole screen (context.js), its text set round the initial
@@ -1604,12 +1665,12 @@ let leafEl = null, leafTicket = 0;
 // still finds it ready
 const canAge = () => !!navigator.gpu;
 let contextMod = null;
-const loadContext = () => contextMod || (contextMod = import('./context.js?v=a8136959').catch(e => { contextMod = null; throw e; }));
+const loadContext = () => contextMod || (contextMod = import('./context.js?v=islands-1').catch(e => { contextMod = null; throw e; }));
 async function showLeaf() {
 	// a share link's lone initial is set on its page at the field's size
 	leaveSolo();
 	const c = pickedCell();
-	if (!c) return;
+	if (!c || !hasPassage(shown(c.P).text)) return;
 	if (leafEl) { closeLeaf(); return; }
 	if (c.P) count('context', shown(c.P));
 	if (teach) teach.did('context');
@@ -1689,7 +1750,7 @@ $('#incontext').onclick = () => showLeaf();
 // paperCanvas, for the test sheets, is made from what comes back
 let paperCanvas = null;
 function makePaper() {
-	const w = new Worker(new URL('./paper-worker.js?v=a8136959', import.meta.url), { type: 'module' });
+	const w = new Worker(new URL('./paper-worker.js?v=islands-1', import.meta.url), { type: 'module' });
 	w.onmessage = ({ data: blob }) => {
 		paper.style.backgroundImage = `url(${URL.createObjectURL(blob)})`;
 		if (!album.hidden) albumPaper.style.backgroundImage = paper.style.backgroundImage;
@@ -1701,17 +1762,20 @@ function makePaper() {
 // --- boot -------------------------------------------------------------------
 
 async function boot() {
-	const [list, kept] = await Promise.all([
+	const [list, , kept] = await Promise.all([
 		fontList(),
+		loadPassages(),
 		fetch('render/data/kept.json').then(r => r.ok ? r.json() : []).catch(() => []),
 	]);
-	fonts = fieldFonts(list);
-	setKept(kept);
+	allFonts = list;
 	const { g: dg, l } = readHash();
 	const shared = solo ? await decodeInitial(Q.get('i')) : null;
+	fonts = catalogueControls(list, l || shared?.text || dg?.root?.P?.text || '');
+	setKept(kept);
 	if (solo && !shared) { solo = false; S = cellSize(); }
 	const g = shared ? { seed: newSeed(), root: { q: 0, r: 0, P: shared } } : dg || { seed: newSeed(), root: null };
 	letter = shared ? null : l;
+	$('#letter-choice').value = letter || '';
 	count('visit');
 	if (shared) count(Q.has('look') ? 'look' : 'open', shared);
 	const st = history.state || {};
@@ -1736,6 +1800,7 @@ async function boot() {
 	painters = new Painters(poolSize(), next);
 	world.append(tools, tag);
 	paperize($('#bar'), { color: '#fbf8f1', edges: { top: 'cut', right: 'torn', bottom: 'torn', left: 'cut' }, seed: 11 });
+	document.querySelectorAll('.control-island').forEach((el, i) => paperize(el, { color: '#fbf8f1', edges: { top: 'cut', right: 'torn', bottom: 'torn', left: 'torn' }, seed: 120 + i }));
 	// the arrows stay under the name, however tall what's in the bar makes it
 	new ResizeObserver(() => { $('#nav').style.top = $('#bar').getBoundingClientRect().bottom + 8 + 'px'; }).observe($('#bar'));
 	// each thing the tag does on its own scrap, a little askew

@@ -1,0 +1,3 @@
+0: Copyright 2019 The Oi Project Authors (github.com/kosbarts/Oi)
+
+14: https://scripts.sil.org/OFL

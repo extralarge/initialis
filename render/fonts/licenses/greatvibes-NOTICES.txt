@@ -1,0 +1,9 @@
+0: Copyright 2010 The Great Vibes Pro Project Authors (https://github.com/googlefonts/great-vibes)
+
+8: Robert E. Leuschke
+
+9: Robert E. Leuschke, Viktoriya Grabowska, Viviana Monsalve, Eben Sorkin
+
+13: This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://openfontlicense.org
+
+14: https://openfontlicense.org

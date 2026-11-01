@@ -6,8 +6,8 @@
 // resting the pointer on its button for a moment (long enough to read its popover), counts as
 // knowing it, and its hint is never shown.
 
-import { drawIcon } from './icons.js?v=a8136959';
-import { paperize } from './torn.js?v=a8136959';
+import { drawIcon } from './icons.js?v=islands-1';
+import { paperize } from './torn.js?v=islands-1';
 
 const touch = matchMedia('(hover: none)').matches;
 

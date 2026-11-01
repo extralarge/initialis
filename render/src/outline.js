@@ -3,8 +3,8 @@
 // hidden seams. When overlaps are present, rasterize the letter and march the squares back
 // into non-overlapping contours.
 
-import { edt } from './util.js?v=a8136959';
-import { blur } from './fill.js?v=a8136959';
+import { edt } from './util.js?v=islands-1';
+import { blur } from './fill.js?v=islands-1';
 
 function canvas(w, h) {
 	if (typeof OffscreenCanvas !== 'undefined') return new OffscreenCanvas(w, h);

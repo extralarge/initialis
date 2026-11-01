@@ -37,3 +37,12 @@ The passages set under an initial in In context (`data/passages.json`, a few for
 ## Marks
 
 The Claude mark on the share button is a trademark of Anthropic, used here to say a link can go to Claude, and the mark in the top right corner is GitHub's, redrawn by hand. Neither is covered by this project's licence. Both paths come from [Simple Icons](https://simple-icons.org).
+
+
+## Cyrillic reading pages
+
+The 30 Russian passages and source links are included in `render/data/paragraphs.json`. Selection credits are included per passage, with links to the source text; the Cyrillic anthology is documented in `CYRILLIC.md`.
+
+Body text: EB Garamond, regular 400, from Google Fonts, SIL Open Font License 1.1; the source licence is preserved in `render/fonts/licenses/ebgaramond-OFL.txt`.
+
+Russian hyphenation: Alexander I. Lebedev, 1999–2003, from the TeX hyph-utf8 project, LPPL 1.2 or later. The unmodified source, including its notice and licence reference, is retained in `render/data/hyph-ru.tex`; the extracted UTF-8 patterns and exceptions are `hyph-ru.pat.txt` and `hyph-ru.hyp.txt`. Source: https://github.com/hyphenation/tex-hyphen/tree/master/hyph-utf8/tex/generic/hyph-utf8/patterns .

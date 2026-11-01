@@ -3,9 +3,9 @@
 // worm tunnels). An arrival map holds, per texel, when (0..1 of the effect's amount)
 // it is first reached, so one texture grows smoothly as the amount slides up.
 
-import { MM, PAGE_W as W, PAGE_H as H, TEXT_X } from './page.js?v=a8136959';
-import { GEO } from './shader.js?v=a8136959';
-import { FX } from './effects.js?v=a8136959';
+import { MM, PAGE_W as W, PAGE_H as H, TEXT_X } from './page.js?v=islands-1';
+import { GEO } from './shader.js?v=islands-1';
+import { FX } from './effects.js?v=islands-1';
 
 export function rng(seed) {
 	let a = (seed * 2654435761) >>> 0 || 1;

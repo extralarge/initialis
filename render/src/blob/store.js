@@ -4,7 +4,7 @@
 // worker recalls a letter's analyses before drawing it and keeps any new ones after.
 // Bump V when latin.js or hanzi.js trace differently, so old analyses are dropped.
 
-import { traced, known } from './blob.js?v=a8136959';
+import { traced, known } from './blob.js?v=islands-1';
 
 const V = 1, STORE = 'analyses', PER_GLYPH = 8;
 let db;

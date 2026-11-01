@@ -102,7 +102,7 @@ void main() {
 	o = vec4(col, 1.);
 }`;
 
-import { clamp } from './util.js?v=a8136959';
+import { clamp } from './util.js?v=islands-1';
 
 // Gray–Scott reaction–diffusion on a grid, walls where the mask is 0.
 // The mask is the texture's distance grid: unit x sits at texel (x / cell + .5) / nx, hence mk.

@@ -4,7 +4,7 @@
 //   ink   only the printing pass (instant)
 // The built-in styles, palettes and variation are in styles.js.
 
-import { NAMES } from './kinds/names.js?v=a8136959';
+import { NAMES } from './kinds/names.js?v=islands-1';
 
 const SLOT = ['A', 'B', 'C', 'paper'];
 const SLOTN = ['none', 'A', 'B', 'C', 'paper'];

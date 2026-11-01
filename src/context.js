@@ -5,12 +5,13 @@
 // printed and aged on the GPU (ageing/src): a little yellowing, what lies behind showing through,
 // a grease spot, light uneven cockling, rubbed and feathered ink.
 
-import '../render/vendor/opentype.min.js?v=a8136959';
-import { layoutPage, pagePath, PAGE, textFont, hyphenator } from '../render/src/page.js?v=a8136959';
-import { Renderer, PRINT_S, GHOST_S } from '../ageing/src/gpu.js?v=a8136959';
-import { buildLeaf, setPageSize } from '../ageing/src/page.js?v=a8136959';
-import { defaultState } from '../ageing/src/effects.js?v=a8136959';
-import { buildGeo, buildField } from '../ageing/src/fields.js?v=a8136959';
+import '../render/vendor/opentype.min.js?v=islands-1';
+import { layoutPage, pagePath, PAGE, textFont, hyphenator } from '../render/src/page.js?v=islands-1';
+import { Renderer, PRINT_S, GHOST_S } from '../ageing/src/gpu.js?v=islands-1';
+import { buildLeaf, setPageSize } from '../ageing/src/page.js?v=islands-1';
+import { defaultState } from '../ageing/src/effects.js?v=islands-1';
+import { buildGeo, buildField } from '../ageing/src/fields.js?v=islands-1';
+import { passageFor, isCyrillic } from '../render/src/passages.js?v=islands-1';
 
 const MARGIN = 40;    // page units of sheet past each side of the screen
 
@@ -64,6 +65,7 @@ function extent(ink) {
 let passages = null;
 const lastPassage = {};
 async function passage(letter) {
+	if (isCyrillic(letter)) return passageFor(letter);
 	if (!passages) passages = fetch(new URL('../data/passages.json', import.meta.url)).then(r => r.ok ? r.json() : {}).catch(() => ({}));
 	const list = (await passages)[letter] || [];
 	if (!list.length) return (await buildLeaf(letter)).par;
@@ -100,8 +102,8 @@ export const canAge = () => !!navigator.gpu;
 // itself is laid over the sheet by the caller, as crisp as in the field. Returns a canvas of the
 // screen at device pixels.
 export async function sheetAround({ P, box, w, h, ghosts, paint, dpr = Math.min(2, devicePixelRatio || 1) }) {
-	const [font, hyph] = await Promise.all([textFont(), hyphenator()]);
-	const letter = /^[A-Z]/.test(P.text) ? P.text[0] : 'A';
+	const letter = /^[A-ZА-ЯЁ]/u.test(P.text) ? P.text[0] : 'A';
+	const [font, hyph] = await Promise.all([textFont(letter), hyphenator(letter)]);
 	const par = await passage(letter);
 	const capH = ((font.tables.os2 && font.tables.os2.sCapHeight) || font.unitsPerEm * 0.66) / font.unitsPerEm * PAGE.fs;
 	// the initial first, to find its ink (drawn at its screen size, about)
@@ -160,6 +162,6 @@ export async function sheetAround({ P, box, w, h, ghosts, paint, dpr = Math.min(
 		const canvas = document.createElement('canvas');
 		canvas.width = img.width; canvas.height = img.height;
 		canvas.getContext('2d').putImageData(img, 0, 0);
-		return { canvas, lines: N, S, indents: L.lines.slice(0, N + 1).map(l => Math.round(l.words[0] ? l.words[0].x : 0)) };
+		return { canvas, par, lines: N, S, indents: L.lines.slice(0, N + 1).map(l => Math.round(l.words[0] ? l.words[0].x : 0)) };
 	} finally { setPageSize(); }
 }

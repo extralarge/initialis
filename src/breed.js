@@ -7,16 +7,16 @@
 // Cells are axial hex coordinates (q, r). In a bred field each cell descends from the neighbours one
 // step nearer the root, so lineages fan out from the root and nearby cells share ancestors.
 
-import { DEFAULTS, SECTIONS, PARAMS } from '../render/src/params.js?v=a8136959';
-import { PRESETS, PALETTES, presetParams, sectionPreset, mutate } from '../render/src/styles.js?v=a8136959';
-import { BLOW_UP } from './codes.js?v=a8136959';
+import { DEFAULTS, SECTIONS, PARAMS } from '../render/src/params.js?v=islands-1';
+import { PRESETS, PALETTES, presetParams, sectionPreset, mutate } from '../render/src/styles.js?v=islands-1';
+import { BLOW_UP } from './codes.js?v=islands-1';
 
-export * from './codes.js?v=a8136959';
-import { rng, hash, gauss, clamp } from '../render/src/util.js?v=a8136959';
+export * from './codes.js?v=islands-1';
+import { rng, hash, gauss, clamp } from '../render/src/util.js?v=islands-1';
+import { alphabetLetters, supportsText, lettersForFont, fontForText, isInitial } from './alphabets.js?v=islands-1';
 
 const ALL = SECTIONS.map(s => s.id);
 const PARTS = ['letter', 'frame', 'orn', 'tex', 'ink'];
-const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const pick = (r, xs) => xs[(r() * xs.length) | 0];
 
 // A few starting points after wen: patterned grounds, engraving.
@@ -68,7 +68,9 @@ const BOXED = new Set(['morris-jenson-initialen', 'goudy-initialen', 'typographe
 // faces left out after a look through them all
 export const LEFT_OUT = new Set(['new-rocker-400', 'vast-shadow-400', 'ewert-400',
 	'init-floral-majuscules-11th-c', 'init-lettres-ombrees-ornees', 'init-romantiques', 'init-celtic-knot']);
-export const fieldFonts = fonts => fonts.filter(f => !BOXED.has(f.id) && !LEFT_OUT.has(f.id));
+export const fieldFonts = (fonts, alphabet = 'cyrillic') => fonts
+	.filter(f => !BOXED.has(f.id) && !LEFT_OUT.has(f.id) && supportsText(f, alphabetLetters(alphabet)))
+	.map(f => ({ ...f, alphabet }));
 
 // textures whose marks are packed finer than this take minutes to grow (Voronoi cells at spacing 2:
 // over two minutes; truchet a minute), so drift stops at these spacings. The styles use wider ones.
@@ -125,7 +127,7 @@ function enough(P, r) {
 const big = s => clamp(+(s * 1.15).toFixed(3), 0.6, 0.95);
 function hold(P, from, fonts, r) {
 	P.dx = from.dx; P.dy = from.dy;
-	if (!fonts.some(f => f.id === P.font)) P.font = pick(r, fonts.filter(f => f.group !== 'initials')).id;
+	if (!fonts.some(f => f.id === P.font)) P.font = fontForText(P.font, lettersForFont(fonts, fonts[0].id), fonts);
 	return P;
 }
 
@@ -208,7 +210,7 @@ export function wild(seed, fonts, font = null) {
 	const P = hold(mutate(base, amount, ALL, hash(seed, 'm'), fonts), base, fonts, r);
 	if (font) P.font = font;
 	P.size = big(base.size);
-	P.text = pick(r, LETTERS);
+	P.text = pick(r, lettersForFont(fonts, P.font));
 	return finish(enough(P, r), r, fonts);
 }
 
@@ -237,13 +239,15 @@ export function child(A, B, d, seed, fonts, pins = [], root = null) {
 			if (sec === 'letter') { P.size = big(P.size); hold(P, P, fonts, r); }
 		}
 	}
-	if (r() < reletter(d)) P.text = pick(r, LETTERS);
+	if (r() < reletter(d)) P.text = pick(r, lettersForFont(fonts, P.font));
 	finish(P, r, fonts);
 	if (root && pins.length) {
 		for (const sec of pins) Object.assign(P, sectionOf(root, sec));
 		if (pins.includes('letter')) { P.text = root.text; P.size = root.size; }
 		else legible(P, r);
 	}
+	if (!isInitial(P.text)) P.text = pick(r, lettersForFont(fonts, P.font));
+	P.font = fontForText(P.font, P.text, fonts);
 	return P;
 }
 

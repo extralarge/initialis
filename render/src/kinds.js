@@ -5,15 +5,15 @@
 // use(url) imports and registers it, or register(module) if you've imported it yourself. What a
 // module looks like, family by family: kinds/README.md.
 
-import { NAMES, PARAMS_OF, FOLLOWS, HEADS } from './kinds/names.js?v=a8136959';
-import { addParams, BY_KEY } from './params.js?v=a8136959';
+import { NAMES, PARAMS_OF, FOLLOWS, HEADS } from './kinds/names.js?v=islands-1';
+import { addParams, BY_KEY } from './params.js?v=islands-1';
 
 export { NAMES, FOLLOWS, HEADS };
 const registry = Object.fromEntries(Object.keys(NAMES).map(f => [f, new Map()]));
 const builtIn = new Set(Object.entries(NAMES).flatMap(([f, ns]) => ns.map(n => f + '/' + n)));
 
 // the build puts its version here, so one page load never mixes two deploys' modules
-const STAMP = '?v=a8136959';
+const STAMP = '?v=islands-1';
 const loading = new Map();
 // built-ins that couldn't be fetched, for a drawing told to go on without them
 const gone = new Set();

@@ -2,7 +2,7 @@
 // Ornament reads it to steer and to size things; every placed piece is stamped back in.
 // begin/rollback lets a stem try growing and be thrown away if it comes out too short.
 
-import { edt } from './util.js?v=a8136959';
+import { edt } from './util.js?v=islands-1';
 
 export class Field {
 	constructor(W, H, cell, cap) {

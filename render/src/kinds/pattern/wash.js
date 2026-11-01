@@ -5,7 +5,7 @@
 // k.frame,
 // or return { final, frame } for a fill that comes in its own way.
 
-import { wash } from '../../relief.js?v=a8136959';
+import { wash } from '../../relief.js?v=islands-1';
 
 export default {
 	family: 'pattern', name: 'wash',

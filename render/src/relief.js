@@ -16,8 +16,8 @@
 // (After wen's contour and engraving bodies, and galley's halftone, tessera, watercolour, rime and
 // hyphae reveals, held still.)
 
-import { edt, rng, makeNoise } from './util.js?v=a8136959';
-import { blur, depth, shading } from './fill.js?v=a8136959';
+import { edt, rng, makeNoise } from './util.js?v=islands-1';
+import { blur, depth, shading } from './fill.js?v=islands-1';
 
 // the middle of the shape where it's thin (a hairline, a serif, an arm): ridge pixels of its
 // depth, about as deep as anything near them, as [x, y, half width]

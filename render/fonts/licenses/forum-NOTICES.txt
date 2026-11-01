@@ -1,0 +1,9 @@
+0: Copyright (c) 2011, Denis Masharov <denis.masharov@gmail.com>. This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: http://scripts.sil.org/OFL
+
+8: Denis Masharov
+
+9: Denis Masharov
+
+13: This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: http://scripts.sil.org/OFL
+
+14: http://scripts.sil.org/OFL

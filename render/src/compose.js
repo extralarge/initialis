@@ -2,21 +2,21 @@
 // ink-coverage canvas: red = ink A, green = ink B, blue = ink C, black = bare paper.
 // Painting is the painter's algorithm, so "paper" is just another colour that knocks out.
 
-import { Field } from './field.js?v=a8136959';
-import { grow, stemPoly, stemDetail, ornSizes } from './ornament.js?v=a8136959';
-import { frameGeometry, bandGeometry, cornerGeometry } from './frame.js?v=a8136959';
-import { patternGeometry, SHAPE_FILLS } from './patterns.js?v=a8136959';
-import { makeFill } from './fill.js?v=a8136959';
-import { growTexture, distanceMap } from './texture.js?v=a8136959';
-import { glyphs } from './fonts.js?v=a8136959';
-import { hasOverlaps, unionContours, inflateContours } from './outline.js?v=a8136959';
-import { rng, hash, makeNoise, bbox, resample, signedArea, edt, clamp, lerp, offsetPolygon, TAU } from './util.js?v=a8136959';
+import { Field } from './field.js?v=islands-1';
+import { grow, stemPoly, stemDetail, ornSizes } from './ornament.js?v=islands-1';
+import { frameGeometry, bandGeometry, cornerGeometry } from './frame.js?v=islands-1';
+import { patternGeometry, SHAPE_FILLS } from './patterns.js?v=islands-1';
+import { makeFill } from './fill.js?v=islands-1';
+import { growTexture, distanceMap } from './texture.js?v=islands-1';
+import { glyphs } from './fonts.js?v=islands-1';
+import { hasOverlaps, unionContours, inflateContours } from './outline.js?v=islands-1';
+import { rng, hash, makeNoise, bbox, resample, signedArea, edt, clamp, lerp, offsetPolygon, TAU } from './util.js?v=islands-1';
 
 export const W = 1000, H = 1000;
 
 // blown-up letters are a big module few initials use: loadBlob() before drawing one
 let blobLetter = null;
-export async function loadBlob() { blobLetter = blobLetter || (await import('./blob/blob.js?v=a8136959')).blobLetter; }
+export async function loadBlob() { blobLetter = blobLetter || (await import('./blob/blob.js?v=islands-1')).blobLetter; }
 const D2R = Math.PI / 180;
 
 function canvas(w, h) {

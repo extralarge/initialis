@@ -4,8 +4,8 @@
 // a module of its own, kinds/pattern/<name>.js; this sets up what they draw with and calls the one
 // asked for. Each returns geometry over a bounding box; the painter clips it to the shape.
 
-import { rng, TAU } from './util.js?v=a8136959';
-import { kind as kindOf, NAMES, FOLLOWS } from './kinds.js?v=a8136959';
+import { rng, TAU } from './util.js?v=islands-1';
+import { kind as kindOf, NAMES, FOLLOWS } from './kinds.js?v=islands-1';
 
 export const PATTERNS = NAMES.pattern;
 export const SHAPE_FILLS = FOLLOWS;

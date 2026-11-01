@@ -1,8 +1,24 @@
 # INITIĀLIS
 
+A Cyrillic extension of [INITIĀLIS by Azlen Elza](https://github.com/azlen/initialis). The original generative engine, visual language, paper, ornaments and interaction design are Azlen's work; this fork adds Russian letterforms, reading passages and catalogue controls.
+
+**Fork:** https://github.com/extralarge/initialis · **Original:** https://initialis.azlen.me
+
+Target deployment: `https://initialis.extralarge.dev` (configured separately in the owner's Coolify instance).
+
+## Changes in this fork
+
+- Cyrillic capital outlines alongside the original Latin catalogue, including seven Spectral weights.
+- Thirty Russian reading passages from different authors and genres, with source metadata, Russian hyphenation and nonbreaking spaces after one-letter words.
+- Linked alphabet and letter selection, plus a typeface filter, on separate paper controls. The controls disappear in reading mode; the original logo remains separate.
+- Context actions are disabled when a letter has no reading passage. Ъ, Ы and Ь are excluded from generated Cyrillic initials.
+- Original reading-page type size, line spacing, measure and drop-cap placement are preserved. The line setter adds Unicode and nonbreaking-space support.
+
+This is a derivative project maintained by [extralarge](https://github.com/extralarge), not the official INITIĀLIS website. See [CYRILLIC.md](CYRILLIC.md) for implementation notes and [THIRD-PARTY.md](THIRD-PARTY.md) for font, library and text credits. The original MIT copyright notice is preserved in [LICENSE](LICENSE).
+
 <a href="https://initialis.azlen.me"><img src="media/launch.webp" alt="Drop caps flick past, then the view pulls back across a field of them until the whole field is one initial" width="100%"></a>
 
-Endless explorer for ornamental drop caps, illuminated lettering, and new typographic aesthetics: https://initialis.azlen.me
+The original project is an endless explorer for ornamental drop caps, illuminated lettering, and new typographic aesthetics.
 
 Every initial is drawn in your browser: a letter, its frame and ground, an ornament that grows out of it, a texture, and two or three inks printed onto paper. Nothing is a picture made in advance.
 
@@ -77,10 +93,33 @@ The code is MIT ([LICENSE](LICENSE)). The fonts, bundled libraries, hyphenation 
 
 ## Privacy
 
-The site keeps anonymous counts so as to see which patterns and fonts people gravitate toward. No cookies, and nothing about who you are. Browsers that ask not to be tracked aren't counted.
+This static fork does not enable the original site's analytics endpoints. Bookmarks and navigation state remain in your browser. The upstream counting module only activates on the original author's hostnames.
 
 ## Fonts
 
-57 faces from Google Fonts under the SIL Open Font License, and four free decorative initial fonts. Only their capitals ship: each face's A to Z outlines as SVG path data in `render/fonts/caps/`, about 1 MB compressed instead of 7 MB of font files, and they draw exactly as the fonts do. Every font and its licence is listed in [render/fonts/FONTS.md](render/fonts/FONTS.md).
+The upstream catalogue contains 57 Google Fonts faces and four decorative initial fonts. This fork extends nine existing faces with Cyrillic and adds nineteen faces, including seven Spectral weights: 28 Cyrillic-capable faces in total. Only capital outlines are used for the initials; the reading page includes the complete body-text font.
 
-The bundled libraries (opentype.js, gifenc, mp4-muxer), the hyphenation patterns and the book texts are credited, with their terms, in [THIRD-PARTY.md](THIRD-PARTY.md).
+Font authors and source licences are preserved in [render/fonts/FONTS.md](render/fonts/FONTS.md) and [render/fonts/licenses/](render/fonts/licenses/). Saint is by **Liza Dushnota, Saint Agency**, released as a free font on the [authors' Behance project](https://www.behance.net/gallery/150260489/Saint-Free-Display-Typeface-Free-font-Typography). Lighthaus is by **Jerak Durzan (2012)** and is listed as free by TypeDump. Neither is represented as OFL: the available source and licensing information, including the absence of explicit outline-redistribution terms, is recorded in [FREE-FONTS.md](render/fonts/licenses/FREE-FONTS.md).
+
+The bundled libraries, hyphenation patterns and reading texts retain their own terms; see [THIRD-PARTY.md](THIRD-PARTY.md).
+
+## Deploy with Coolify
+
+Use this repository as a separate application; it does not require changes to the main Next.js website.
+
+| Setting | Value |
+|---|---|
+| Repository | `https://github.com/extralarge/initialis` |
+| Branch | `main` |
+| Build pack / strategy | Static |
+| Base directory | `/` |
+| Internal HTTP port | `80` |
+| Domain | `https://initialis.extralarge.dev` |
+| Install/build commands | None |
+| Environment variables | None |
+
+The browser runs the renderer and workers; no Node.js application server or database is needed. Coolify can serve this application with its static Nginx image alongside existing Node.js applications. See the [Coolify Static documentation](https://coolify.io/docs/applications/builds/static).
+
+In Cloudflare, point an `A` record named `initialis` at the Coolify server's public IPv4 address; add an `AAAA` record only if the server's IPv6 is configured. Configure HTTPS in Coolify. No GitHub Pages deployment is configured by this fork.
+
+Automatic deploys require a GitHub App integration or a repository webhook; a plain public-repository URL alone does not enable them. See [Coolify's public repository documentation](https://coolify.io/docs/applications/sources/public-repositories).

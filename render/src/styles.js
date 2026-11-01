@@ -2,8 +2,8 @@
 // section presets are those same styles restricted to one section, so you can take Kelmscott's
 // ornament with a Deco frame. Only what makes new initials needs this: drawing one doesn't.
 
-import { PARAMS, BY_KEY, DEFAULTS } from './params.js?v=a8136959';
-import { rng, gauss, clamp } from './util.js?v=a8136959';
+import { PARAMS, BY_KEY, DEFAULTS } from './params.js?v=islands-1';
+import { rng, gauss, clamp } from './util.js?v=islands-1';
 
 export const PALETTES = [
 	{ name: 'Lamp black', paper: '#f3eee3', inkA: '#1a1614', inkB: '#b3301e', inkC: '#2c4a8c' },

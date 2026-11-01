@@ -1,7 +1,7 @@
 // An initial as text: the links and codes that carry its settings. Apart from breed.js so that reading
 // an initial (the library, a share link) doesn't need the styles that make new ones.
 
-import { DEFAULTS } from '../render/src/params.js?v=a8136959';
+import { DEFAULTS } from '../render/src/params.js?v=islands-1';
 
 // The blown-up letter (the renderer's lBlob) is parked: the field keeps to the faces as cut, and the
 // edit view doesn't offer it. true brings it back, in these faces only and clamped.

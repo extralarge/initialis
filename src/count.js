@@ -4,7 +4,7 @@
 // about who. Nothing is counted when the browser asks not to be tracked, under ?test (unless &count),
 // or anywhere but the site itself. functions/api/e.js keeps them (see README, Privacy).
 
-import { diff } from './breed.js?v=a8136959';
+import { diff } from './breed.js?v=islands-1';
 
 const HOST = /(^|\.)initialis\.azlen\.me$|\.initialis-6k5\.pages\.dev$/;
 const Q = new URLSearchParams(location.search);

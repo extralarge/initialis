@@ -1,0 +1,172 @@
+[
+  {
+    "font": "cormorant-garamond-500",
+    "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "source": "https://github.com/google/fonts/tree/main/ofl/cormorantgaramond",
+    "sourceWeight": 500
+  },
+  {
+    "font": "cormorant-garamond-700",
+    "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "source": "https://github.com/google/fonts/tree/main/ofl/cormorantgaramond",
+    "sourceWeight": 700
+  },
+  {
+    "font": "eb-garamond-400",
+    "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "source": "https://github.com/google/fonts/tree/main/ofl/ebgaramond",
+    "sourceWeight": 400
+  },
+  {
+    "font": "eb-garamond-700",
+    "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "source": "https://github.com/google/fonts/tree/main/ofl/ebgaramond",
+    "sourceWeight": 700
+  },
+  {
+    "font": "forum-400",
+    "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "source": "https://github.com/google/fonts/tree/main/ofl/forum",
+    "sourceWeight": 400
+  },
+  {
+    "font": "playfair-display-400",
+    "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "source": "https://github.com/google/fonts/tree/main/ofl/playfairdisplay",
+    "sourceWeight": 400
+  },
+  {
+    "font": "playfair-display-900",
+    "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "source": "https://github.com/google/fonts/tree/main/ofl/playfairdisplay",
+    "sourceWeight": 900
+  },
+  {
+    "font": "great-vibes-400",
+    "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "source": "https://github.com/google/fonts/tree/main/ofl/greatvibes",
+    "sourceWeight": 400
+  },
+  {
+    "font": "poiret-one-400",
+    "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "source": "https://github.com/google/fonts/tree/main/ofl/poiretone",
+    "sourceWeight": 400
+  },
+  {
+    "font": "lighthaus-400",
+    "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "source": "https://www.typedump.com/font/lighthaus",
+    "sourceWeight": 400
+  },
+  {
+    "font": "foglihten-no06-400",
+    "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "source": "https://www.glukfonts.pl/font.php?font=FoglihtenNo06",
+    "sourceWeight": 400
+  },
+  {
+    "font": "dispater-400",
+    "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "source": "https://www.typedump.com/font/dispater",
+    "sourceWeight": 400
+  },
+  {
+    "font": "dispater-500",
+    "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "source": "https://www.typedump.com/font/dispater",
+    "sourceWeight": 500
+  },
+  {
+    "font": "dispater-600",
+    "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "source": "https://www.typedump.com/font/dispater",
+    "sourceWeight": 600
+  },
+  {
+    "font": "dispater-700",
+    "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "source": "https://www.typedump.com/font/dispater",
+    "sourceWeight": 700
+  },
+  {
+    "font": "sinistre-400",
+    "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "source": "https://www.typedump.com/font/sinistre",
+    "sourceWeight": 72
+  },
+  {
+    "font": "sinistre-700",
+    "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "source": "https://www.typedump.com/font/sinistre",
+    "sourceWeight": 142
+  },
+  {
+    "font": "sinistre-900",
+    "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "source": "https://www.typedump.com/font/sinistre",
+    "sourceWeight": 200
+  },
+  {
+    "font": "saint-400",
+    "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "source": "https://www.typedump.com/font/saint",
+    "sourceWeight": 400,
+    "authorSource": "https://www.behance.net/gallery/150260489/Saint-Free-Display-Typeface-Free-font-Typography",
+    "authorDownload": "https://drive.google.com/drive/folders/1ENL_f_sEJ98qvjOWyOKrWT0hVgXCwRrQ"
+  },
+  {
+    "font": "lack-line-400",
+    "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "source": "https://www.typedump.com/font/lack-line",
+    "sourceWeight": 400
+  },
+  {
+    "font": "oi-400",
+    "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "source": "https://www.typedump.com/font/oi",
+    "sourceWeight": 400
+  },
+  {
+    "font": "spectral-200",
+    "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "source": "https://github.com/google/fonts/tree/main/ofl/spectral",
+    "sourceWeight": 200
+  },
+  {
+    "font": "spectral-300",
+    "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "source": "https://github.com/google/fonts/tree/main/ofl/spectral",
+    "sourceWeight": 300
+  },
+  {
+    "font": "spectral-400",
+    "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "source": "https://github.com/google/fonts/tree/main/ofl/spectral",
+    "sourceWeight": 400
+  },
+  {
+    "font": "spectral-500",
+    "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "source": "https://github.com/google/fonts/tree/main/ofl/spectral",
+    "sourceWeight": 500
+  },
+  {
+    "font": "spectral-600",
+    "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "source": "https://github.com/google/fonts/tree/main/ofl/spectral",
+    "sourceWeight": 600
+  },
+  {
+    "font": "spectral-700",
+    "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "source": "https://github.com/google/fonts/tree/main/ofl/spectral",
+    "sourceWeight": 700
+  },
+  {
+    "font": "spectral-800",
+    "characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+    "source": "https://github.com/google/fonts/tree/main/ofl/spectral",
+    "sourceWeight": 800
+  }
+]

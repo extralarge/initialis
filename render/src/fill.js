@@ -3,8 +3,8 @@
 // shading, and makeFill, which sets a fill going. The biggest (mosaic, wash, frost, mycelium) have
 // their machinery in relief.js, fetched only for them.
 
-import { edt, rng } from './util.js?v=a8136959';
-import { kind as kindOf } from './kinds.js?v=a8136959';
+import { edt, rng } from './util.js?v=islands-1';
+import { kind as kindOf } from './kinds.js?v=islands-1';
 
 // three box blurs, about a gaussian of radius r (px), of a square size × size field
 export function blur(a, size, r) {

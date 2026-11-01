@@ -1,10 +1,10 @@
 // WebGPU: the leaf's textures (ink coverage with mips, the ghost texts, the initial's colour, the
 // ink's signed distance field), the arrival maps and geometry, and the one compose pass.
 
-import { COMPOSE_WGSL, MIP_WGSL, JFA_WGSL, GEO } from './shader.js?v=a8136959';
-import { PAGE_W, PAGE_H, TEXT_X, MM } from './page.js?v=a8136959';
-import { EFFECTS, packFx } from './effects.js?v=a8136959';
-import { FIELD_S } from './fields.js?v=a8136959';
+import { COMPOSE_WGSL, MIP_WGSL, JFA_WGSL, GEO } from './shader.js?v=islands-1';
+import { PAGE_W, PAGE_H, TEXT_X, MM } from './page.js?v=islands-1';
+import { EFFECTS, packFx } from './effects.js?v=islands-1';
+import { FIELD_S } from './fields.js?v=islands-1';
 
 export const PRINT_S = 3;     // ink coverage texels per unit
 export const GHOST_S = 1.5;   // back-of-leaf / facing page texels per unit

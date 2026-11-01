@@ -15,7 +15,7 @@
 //              across) stay friends, so inflated counters round their corners.
 //   2 part     strokes that never touch: a gap between them, always
 
-import { distance, thin, prune } from './raster.js?v=a8136959';
+import { distance, thin, prune } from './raster.js?v=islands-1';
 
 export const EM = 1024;
 export const STEP = 18;       // particle spacing along a median
@@ -349,7 +349,7 @@ export async function analyseStyle(raw, style) {
   const kai = kaiGeometry(raw);
   let H = null;
   if (style === 'sans') {
-    const { sansGeometry } = await import('./align.js?v=a8136959');
+    const { sansGeometry } = await import('./align.js?v=islands-1');
     const g = await sansGeometry(raw, kai);
     if (g) H = analyse(raw, { style: 'sans', ...g });
   }

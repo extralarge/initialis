@@ -83,6 +83,14 @@ button.plain, #bar button, .tag button, .tag a { all: unset; cursor: pointer; co
 #name svg { display: inline-block; vertical-align: -1px; }
 #hint { color: var(--quiet); font-style: italic; }
 #hint:empty { display: none; }
+#catalogue { position: fixed; left: 150px; top: calc(14px + env(safe-area-inset-top)); z-index: 12; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 12px; max-width: calc(100vw - 260px); font: 12px/1.5 Georgia, serif; }
+.control-island { position: relative; isolation: isolate; display: flex; align-items: center; flex-wrap: wrap; gap: 7px 14px; padding: 8px 12px 9px; }
+#catalogue label { display: flex; align-items: center; gap: 6px; color: var(--quiet); }
+#catalogue select { max-width: min(230px, 46vw); border: 1px solid #d9d0be; border-radius: 3px; padding: 4px 6px; background: #fbf8f1; color: var(--ink); font: inherit; cursor: pointer; }
+#catalogue select:focus-visible { outline: 2px solid #856a47; outline-offset: 2px; }
+#font-count { color: var(--quiet); }
+#letter-choice { width: 26px; border: 1px solid #d9d0be; border-radius: 3px; padding: 4px; background: #fbf8f1; color: var(--ink); font: inherit; text-align: center; user-select: text; -webkit-user-select: text; }
+body:has(#sheet.shown) #catalogue, body:has(#context:not([hidden])) #catalogue { display: none; }
 
 /* back and forward: two arrows on scraps of their own, under the name; faint when there's nowhere to go */
 #nav { position: fixed; left: 16px; top: calc(56px + env(safe-area-inset-top)); z-index: 12; display: flex; gap: 6px; }
@@ -176,3 +184,7 @@ button.plain, #bar button, .tag button, .tag a { all: unset; cursor: pointer; co
 #context canvas { display: block; box-shadow: 0 1px 10px rgba(40, 30, 20, .18); }
 #context p { margin: 0; color: var(--quiet); }
 
+
+#incontext:disabled { opacity: .28; cursor: default; pointer-events: none; }
+
+@media (max-width: 700px) { #catalogue { left: 14px; top: calc(100px + env(safe-area-inset-top)); max-width: calc(100vw - 28px); } }

@@ -9,7 +9,7 @@ const cache = new Map();
 const loaded = new Map();
 let list = null;
 
-const WEIGHT = { 400: '', 500: 'Medium', 700: 'Bold', 900: 'Black' };
+const WEIGHT = { 200: 'ExtraLight', 300: 'Light', 400: '', 500: 'Medium', 600: 'Semibold', 700: 'Bold', 800: 'ExtraBold', 900: 'Black' };
 
 // a JSON file. Where fetching is blocked (an artifact's sandbox lets scripts load and nothing else), the
 // npm package has the same data as a script beside it, x.js for x.json (tools/package.py)
@@ -18,16 +18,16 @@ const data = url => fetch(url).then(r => { if (!r.ok) throw new Error(r.status +
 
 export async function fontList() {
 	if (list) return list;
-	const base = await data(new URL('fonts/base/manifest.json', ROOT));
+	const base = await data(new URL('fonts/base/manifest.json?v=islands-1', ROOT));
 	let init = [];
-	try { init = await data(new URL('fonts/initials/manifest.json', ROOT)); } catch { }
+	try { init = await data(new URL('fonts/initials/manifest.json?v=islands-1', ROOT)); } catch { }
 	list = [];
 	for (const f of base) {
 		const ws = Object.keys(f.files);
 		for (const w of ws) {
 			const label = ws.length > 1 && WEIGHT[w] ? `${f.name} ${WEIGHT[w]}` : f.name;
 			const id = `${f.slug}-${w}`;
-			list.push({ id, name: label, family: f.name, group: f.group, note: f.note, caps: !!f.caps, url: new URL(f.caps ? `fonts/caps/${id}.json` : `fonts/base/${f.files[w]}`, ROOT).href });
+			list.push({ id, name: label, family: f.name, group: f.group, note: f.note, characters: f.characters || 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', caps: !!f.caps, url: new URL(f.caps ? `fonts/caps/${id}.json` : `fonts/base/${f.files[w]}`, ROOT).href });
 		}
 	}
 	for (const f of init) {
@@ -43,7 +43,7 @@ export function fontInfo(id) { return list && list.find(f => f.id === id); }
 
 // opentype.js, only for a whole font file (a face shipped as capitals, or a page's text, doesn't
 // need its 170 KB parsed before the first initial)
-export const opentype = () => globalThis.opentype ? Promise.resolve(globalThis.opentype) : import('../vendor/opentype.min.js?v=a8136959').then(() => globalThis.opentype);
+export const opentype = () => globalThis.opentype ? Promise.resolve(globalThis.opentype) : import('../vendor/opentype.min.js?v=islands-1').then(() => globalThis.opentype);
 
 export function loadFont(id) {
 	if (cache.has(id)) return cache.get(id);

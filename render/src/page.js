@@ -2,13 +2,16 @@
 // wrapped around a drop cap N lines deep, then the paragraphs that follow. Units are page units
 // with the drop cap's box at the origin: [0, S] × [0, S].
 
-import { opentype } from './fonts.js?v=a8136959';
+import { opentype } from './fonts.js?v=islands-1';
 
 const ROOT = new URL('../', import.meta.url);
-let fontP = null;
-export function textFont() {
-	if (!fontP) fontP = Promise.all([fetch(new URL('fonts/text/et-book-roman-old-style-figures.ttf', ROOT)).then(r => r.arrayBuffer()), opentype()]).then(([b, ot]) => ot.parse(b));
-	return fontP;
+const fontPromises = new Map();
+const language = letter => /[А-ЯЁа-яё]/u.test(letter) ? 'ru' : 'en-us';
+export function textFont(letter = 'A') {
+	const lang = language(letter);
+	const file = lang === 'ru' ? 'eb-garamond-regular.ttf' : 'et-book-roman-old-style-figures.ttf';
+	if (!fontPromises.has(lang)) fontPromises.set(lang, Promise.all([fetch(new URL('fonts/text/' + file, ROOT)).then(r => { if (!r.ok) throw new Error('Text font unavailable'); return r.arrayBuffer(); }), opentype()]).then(([b, ot]) => ot.parse(b)));
+	return fontPromises.get(lang);
 }
 
 // Liang's hyphenation with TeX's US English patterns (data/hyph-en-us.*), as TeX does it:
@@ -41,10 +44,11 @@ export function makeHyphenator(patText, exText = '') {
 		return out;
 	};
 }
-let hyphP = null;
-export function hyphenator() {
-	if (!hyphP) hyphP = Promise.all(['data/hyph-en-us.pat.txt', 'data/hyph-en-us.hyp.txt'].map(f => fetch(new URL(f, ROOT)).then(r => r.text()))).then(([p, e]) => makeHyphenator(p, e));
-	return hyphP;
+const hyphenPromises = new Map();
+export function hyphenator(letter = 'A') {
+	const lang = language(letter);
+	if (!hyphenPromises.has(lang)) hyphenPromises.set(lang, Promise.all([`data/hyph-${lang}.pat.txt`, `data/hyph-${lang}.hyp.txt`].map(f => fetch(new URL(f, ROOT)).then(r => r.text()))).then(([p, e]) => makeHyphenator(p, e)));
+	return hyphenPromises.get(lang);
 }
 
 export const PAGE = { fs: 22, lh: 30, measure: 600, lines: 3, maxLines: 30 };
@@ -83,7 +87,7 @@ export function layoutPage(font, par, hyph = null, measure = PAGE.measure, opt =
 		return x;
 	};
 	// paragraphs → words. The first paragraph loses its first letter to the initial; its first two words go in small caps.
-	const paras = [par.text.slice(1), ...(par.next || [])];
+	const paras = [par.text.slice(1).trimStart(), ...(par.next || [])];
 	const lines = [];
 	let y = capH; // first baseline
 	paras.forEach((text, pi) => {
@@ -91,10 +95,10 @@ export function layoutPage(font, par, hyph = null, measure = PAGE.measure, opt =
 		// words in pieces a line may break between: after em dashes and hyphens, and at hyphenation
 		// points (hy: breaking there adds a hyphen). A "tight" piece has no space before it.
 		const words = [];
-		text.split(' ').filter(Boolean).forEach((t, wi) => {
+		text.split(/[^\S\u00a0]+/).filter(Boolean).forEach((t, wi) => {
 			const small = pi === 0 && wi < 2;
-			t.split(/(?<=—)|(?<=[a-z]-)(?=[a-z])/i).forEach((part, k) => {
-				const m = part.match(/^([^A-Za-z]*)([A-Za-z]+)([^A-Za-z]*)$/);
+			t.split(/(?<=—)|(?<=[a-zа-яё]-)(?=[a-zа-яё])/iu).forEach((part, k) => {
+				const m = part.match(/^((?:[\s\S]*\u00a0)?[^\p{L}]*)([\p{L}]+)([^\p{L}]*)$/u);
 				const cuts = hyph && !small && m && m[2].length >= 6 ? hyph(m[2]) : [];
 				let prev = 0;
 				const pieces = [];

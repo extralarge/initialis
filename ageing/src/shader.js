@@ -5,7 +5,7 @@
 // Stains and ink are mixed subtractively: paper colour × ink transmission. Ink is carried as
 // absorbance (1 − transmission per channel) so it can be blurred, smeared, eroded and faded.
 
-import { FX_WGSL } from './effects.js?v=a8136959';
+import { FX_WGSL } from './effects.js?v=islands-1';
 
 export const GEO = { coffee: 0, grease: 32, folds: 44, crumple: 56, tape: 152, rust: 158, prints: 166, tear: 174, smudge: 270, size: 280 };
 

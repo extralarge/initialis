@@ -13,7 +13,7 @@
 //   person   who a link can go to, peering out from behind share (drawShare)
 //   github   GitHub's mark, traced and inked by the same hand
 
-import { rng, makeNoise } from '../render/src/util.js?v=a8136959';
+import { rng, makeNoise } from '../render/src/util.js?v=islands-1';
 
 const rect = (x0, y0, x1, y1, r = 0.8) => {
 	const pts = [], q = Math.min(r, (x1 - x0) / 2, (y1 - y0) / 2);

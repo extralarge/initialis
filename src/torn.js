@@ -3,7 +3,7 @@
 // bristle with fibres; deckle edges that ripple softly; cut edges straight; and a soft shadow on
 // the field. paperize(el, …) puts a sheet behind an element and keeps it fitted to it.
 
-import { rng, makeNoise } from '../render/src/util.js?v=a8136959';
+import { rng, makeNoise } from '../render/src/util.js?v=islands-1';
 
 const PAD = 14; // css px round the element for fibres and shadow
 

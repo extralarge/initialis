@@ -10,9 +10,9 @@
 //   truchet  quarter-circle tiles (or 10 PRINT diagonals, or triangles)
 //   coral    reaction–diffusion, grown on the GPU (see ink.js); here we only make its mask
 
-import { edt, rng, clamp, lerp, TAU, offsetPolygon } from './util.js?v=a8136959';
-import { kind as kindOf } from './kinds.js?v=a8136959';
-import { BY_KEY } from './params.js?v=a8136959';
+import { edt, rng, clamp, lerp, TAU, offsetPolygon } from './util.js?v=islands-1';
+import { kind as kindOf } from './kinds.js?v=islands-1';
+import { BY_KEY } from './params.js?v=islands-1';
 
 // each kind is a module of its own (kinds/texture/<name>.js); this sets up what they grow with
 export const TEXTURES = BY_KEY.tKind.spec;

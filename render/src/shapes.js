@@ -3,8 +3,8 @@
 // so the renderer can fill, outline or knock out any of it the same way. Each kind of leaf and
 // flower is a module of its own (kinds/leaf/, kinds/flower/); this has the blades they're built from.
 
-import { TAU, clamp } from './util.js?v=a8136959';
-import { kind as kindOf } from './kinds.js?v=a8136959';
+import { TAU, clamp } from './util.js?v=islands-1';
+import { kind as kindOf } from './kinds.js?v=islands-1';
 
 const frac = x => x - Math.floor(x);
 

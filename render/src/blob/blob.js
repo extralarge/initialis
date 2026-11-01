@@ -5,11 +5,11 @@
 // The settled capsules fold into one outline, strokes of a part by an angle-aware smooth union
 // (wen's fillet) and parts by a hard one, and that outline is the letter.
 
-import { Sim } from './sim.js?v=a8136959';
-import { R } from './raster.js?v=a8136959';
-import { analysedMask } from './latin.js?v=a8136959';
-import { edt } from '../util.js?v=a8136959';
-import { march } from '../outline.js?v=a8136959';
+import { Sim } from './sim.js?v=islands-1';
+import { R } from './raster.js?v=islands-1';
+import { analysedMask } from './latin.js?v=islands-1';
+import { edt } from '../util.js?v=islands-1';
+import { march } from '../outline.js?v=islands-1';
 
 const R0 = 30;      // rest stroke radius, em units (bao's 1024 em)
 const WEN_PX = 0.42; // wen's natural scale, px per em unit: its gaps and floors are tuned there

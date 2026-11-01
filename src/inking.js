@@ -12,7 +12,7 @@
 // as fast as there is something to uncover. One drawn again (a new letter) is uncovered over the
 // old the same way.
 
-import { makeNoise } from '../render/src/util.js?v=a8136959';
+import { makeNoise } from '../render/src/util.js?v=islands-1';
 
 export const PACE = 150;   // ms per cell of distance
 const G = 72;              // mask cells across an initial
@@ -48,7 +48,7 @@ export class Inking {
 		this.jobs = []; this.raf = 0; this.waiting = waiting; this.front = null;
 		this.asks = new Map(); // id -> what's waiting on the ink worker
 		this.ids = 0;
-		this.worker = new Worker(new URL('./ink-worker.js?v=a8136959', import.meta.url), { type: 'module' });
+		this.worker = new Worker(new URL('./ink-worker.js?v=islands-1', import.meta.url), { type: 'module' });
 		this.worker.onmessage = (e) => this.answered(e.data);
 	}
 	// a new stain: wave {x, y, seed}; it runs until `until` ms of its own time

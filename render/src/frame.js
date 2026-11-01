@@ -2,10 +2,10 @@
 // shape, band and corner ornament is a module of its own (kinds/frame/, kinds/band/, kinds/corner/);
 // this lays out the rules and calls them.
 
-import { offsetPolygon, resample, TAU, polyLength } from './util.js?v=a8136959';
-import { blade, circlePoly } from './shapes.js?v=a8136959';
-import { kind as kindOf } from './kinds.js?v=a8136959';
-import { BY_KEY } from './params.js?v=a8136959';
+import { offsetPolygon, resample, TAU, polyLength } from './util.js?v=islands-1';
+import { blade, circlePoly } from './shapes.js?v=islands-1';
+import { kind as kindOf } from './kinds.js?v=islands-1';
+import { BY_KEY } from './params.js?v=islands-1';
 
 export const FRAMES = BY_KEY.frame.spec;
 

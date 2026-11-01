@@ -5,7 +5,7 @@
 // k.frame,
 // or return { final, frame } for a fill that comes in its own way.
 
-import { shading } from '../../fill.js?v=a8136959';
+import { shading } from '../../fill.js?v=islands-1';
 
 export default {
 	family: 'pattern', name: 'halftone',

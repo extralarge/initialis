@@ -7,8 +7,8 @@
 // Strokes that meet at a junction are joined there. Then bao's own analysis
 // takes it from the same geometry it gets from the Kaiti or the sans fit.
 
-import { EM, analyse } from './hanzi.js?v=a8136959';
-import { R, distance, thin, prune } from './raster.js?v=a8136959';
+import { EM, analyse } from './hanzi.js?v=islands-1';
+import { R, distance, thin, prune } from './raster.js?v=islands-1';
 
 const U = EM / R;
 

@@ -3,7 +3,7 @@
 // same leaf (show-through) and the facing page (offset). All in page units, y down; a unit is
 // the renderer's (22 units = the text size), about 5.65 units to the millimetre on an octavo page.
 
-import { layoutPage, pagePath, PAGE, textFont, hyphenator } from '../../render/src/page.js?v=a8136959';
+import { layoutPage, pagePath, PAGE, textFont, hyphenator } from '../../render/src/page.js?v=islands-1';
 
 export const MM = 5.65;
 export let PAGE_W = 791, PAGE_H = 1220;            // 140 × 216 mm

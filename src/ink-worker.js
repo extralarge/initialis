@@ -1,6 +1,6 @@
 // Works out when the ink reaches each point of an arriving initial (inking.js maskTimes) off the
 // page's thread: the bitmap comes in, and goes back with its times.
-import { maskTimes } from './inking.js?v=a8136959';
+import { maskTimes } from './inking.js?v=islands-1';
 
 self.onmessage = (e) => {
 	const { id, bitmap, rect, wave } = e.data;

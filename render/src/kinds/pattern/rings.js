@@ -3,7 +3,7 @@
 // (cx, cy);
 // the painter clips them to the shape.
 
-import { TAU } from '../../util.js?v=a8136959';
+import { TAU } from '../../util.js?v=islands-1';
 
 export default {
 	family: 'pattern', name: 'rings',
